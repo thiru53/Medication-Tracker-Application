@@ -1,7 +1,10 @@
 package com.MedicationApplication.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "medication_note")
 public class MedicationNote {
@@ -13,6 +16,7 @@ public class MedicationNote {
     private String note;
     
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "medication_id")
     private Medication medication;
 

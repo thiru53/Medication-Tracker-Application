@@ -2,6 +2,7 @@ package com.MedicationApplication.entity;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import jakarta.persistence.Column;
@@ -14,8 +15,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import lombok.Data;
 
 
+@Data
 @Entity
 @Table(name = "medication_completion")
 public class MedicationCompletion {
@@ -36,6 +39,7 @@ public class MedicationCompletion {
     // Other fields, getters, setters, and constructors
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "medication_id", referencedColumnName = "id")
     private Medication medication;
     

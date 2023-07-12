@@ -13,5 +13,6 @@ public interface MedicationNoteRepository extends JpaRepository<MedicationNote, 
 
 	 // Add custom query methods if required
 
+    List<MedicationNote> getNoteByMedicationId(Long medicationId);
 
 }

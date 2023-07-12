@@ -8,10 +8,12 @@ import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name="medication")
 public class Medication {
@@ -28,7 +30,6 @@ public class Medication {
     @NonNull
     private String time;
 
-    @NonNull
     private int numberOfDoses;
 
     @NonNull

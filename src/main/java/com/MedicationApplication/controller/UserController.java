@@ -198,7 +198,8 @@ public class UserController {
         try {
             List<MedicationCompletion> medicationCompletions = medicationCompletionRepository.getMedicationCompletionByMedicationId(medicationId);
             if(!medicationCompletions.isEmpty()){
-                return new ResponseEntity<>(medicationCompletions, HttpStatus.OK);
+                response = medicationCompletions.stream().collect(Collectors.toMap(mediCom -> mediCom.getCompletionDate().toString(), mediCom -> (mediCom.isCompletionStatus() ? "completed":""), (v1, v2) -> v1+v2));
+                return new ResponseEntity<>(response, HttpStatus.OK);
             }
             response.put("status", "failure");
             response.put("message", "No MedicationCompletion found");

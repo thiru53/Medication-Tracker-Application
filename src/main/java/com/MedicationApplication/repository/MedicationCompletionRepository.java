@@ -15,5 +15,7 @@ import com.MedicationApplication.entity.MedicationCompletion;
 public interface MedicationCompletionRepository extends JpaRepository<MedicationCompletion, Long> {
 	 // Add custom query methods if required
      List<MedicationCompletion> getMedicationCompletionByMedicationId(Long medicationId);
+
+    Optional<MedicationCompletion> findByCompletionDate(LocalDate completionDate);
 }
 

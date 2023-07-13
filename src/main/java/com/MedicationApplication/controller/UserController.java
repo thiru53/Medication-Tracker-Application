@@ -174,17 +174,17 @@ public class UserController {
     ) {
         Map<String, String> response = new HashMap<>();
         try {
-            List<Medication> medications = medicationRepository.findByIdStartDateBeforeAndEndDateAfter(medicationId, medicationCompletion.getCompletionDate());
-            if(Objects.nonNull(medications) && !medications.isEmpty()){
-                medicationCompletion.setMedication(medications.get(0));
-                medicationCompletion.setCompletionStatus(Boolean.TRUE);
-                medicationCompletionRepository.save(medicationCompletion);
-                response.put("status", "success");
-                response.put("message", "Medication completion recorded successfully.");
-                return new ResponseEntity<>(response, HttpStatus.OK);
-            }
-            response.put("status", "failure");
-            response.put("message", "MedicationCompletion date is out of range.");
+            Medication medicationFromDB = medicationRepository.findById(medicationId).orElseThrow(() -> new EntityNotFoundException("Medication not found for the id : " + medicationId));
+            boolean completionStatus = isBetweenDates(medicationCompletion.getCompletionDate(), medicationFromDB.getStartDate(), medicationFromDB.getEndDate());
+
+            MedicationCompletion medicationCompletion1 = medicationCompletionRepository.findByCompletionDate(medicationCompletion.getCompletionDate()).orElse(medicationCompletion);
+            medicationCompletion1.setMedication(medicationFromDB);
+            medicationCompletion1.setCompletionStatus(completionStatus);
+            medicationCompletionRepository.save(medicationCompletion1);
+
+            response.put("status", "success");
+            response.put("message", "Medication completion recorded successfully.");
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e){
             response.put("status", "failure");
             response.put("message", e.getMessage());

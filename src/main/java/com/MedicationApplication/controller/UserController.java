@@ -203,7 +203,8 @@ public class UserController {
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
             response.put("status", "failure");
-            response.put("message", "No MedicationCompletion found");
+            response.put("message", "No Medication completion recorded found");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }catch (Exception e){
             response.put("status", "failure");
             response.put("message", e.getMessage());

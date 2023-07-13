@@ -1,5 +1,6 @@
 package com.MedicationApplication.controller;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -179,7 +180,7 @@ public class UserController {
                 medicationCompletion.setCompletionStatus(Boolean.TRUE);
                 medicationCompletionRepository.save(medicationCompletion);
                 response.put("status", "success");
-                response.put("message", "MedicationCompletion added successfully.");
+                response.put("message", "Medication completion recorded successfully.");
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
             response.put("status", "failure");
@@ -221,4 +222,7 @@ public class UserController {
         }
     }
 
+    private boolean isBetweenDates(LocalDate givenDate, LocalDate startDate, LocalDate endDate) {
+        return givenDate.isEqual(startDate) || givenDate.isEqual(endDate) || (givenDate.isAfter(startDate) && givenDate.isBefore(endDate));
+    }
 }
